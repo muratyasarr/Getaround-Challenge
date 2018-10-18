@@ -19,8 +19,8 @@ class MoviesViewController: BaseViewController {
     
     lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.minimumInteritemSpacing = 0
-        flowLayout.minimumLineSpacing = 0
+        flowLayout.minimumInteritemSpacing = Constants.Metrics.moviesCollectionViewInterItemSpacing
+        flowLayout.minimumLineSpacing = Constants.Metrics.moviesCollectionViewLineSpacing
         let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: flowLayout)
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -43,19 +43,20 @@ class MoviesViewController: BaseViewController {
     }
     
     private func prepareData() {
+        // TODO: Could add a loading indicator.
         NetworkManager().request(MoviesEndpoint.nowPlaying) { (result: Result<TMDBResultModel<[Movie]>>) in
             switch result {
             case .success(let result):
                 guard let movies = result.results else { return }
                 self.movies = movies
             case .error(let error):
+                // TODO: Showing alert and informing users of the error should improve user experience.
                 print("error: \(error.localizedDescription)")
             }
         }
     }
     
-    // TODO: Pagination might be implemented for infinite scrollling experience
-    
+    // TODO: Pagination might be implemented for infinite scrollling experience. I leave it because I assume it as over-architecting in this scope. (reference point: "it should take you 3-5h, if you are spending more time, you are over-architecting.")
 }
 
 extension MoviesViewController: UICollectionViewDataSource {
@@ -66,8 +67,8 @@ extension MoviesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let movieCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: MovieCollectionViewCell.self), for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell() }
         let movie = movies[indexPath.row]
-        // TODO: fetch image base url from a network related layer.
-        if let posterImagePath = movie.posterImagePath, let posterImageURL = URL(string: "https://image.tmdb.org/t/p/w500" + posterImagePath) {
+        // TODO: get image url from a network layer method. Make it work correctly also for full url paths.
+        if let posterImagePath = movie.posterImagePath, let posterImageURL = URL(string: NetworkManager.Constants.imageBaseURL + posterImagePath) {
             movieCell.coverImageView.kf.setImage(with: posterImageURL)
         }
         return movieCell

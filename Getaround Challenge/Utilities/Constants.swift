@@ -23,4 +23,9 @@ enum Constants {
         )
     }
     
+    enum Metrics {
+        static let moviesCollectionViewLineSpacing: CGFloat = 0.0
+        static let moviesCollectionViewInterItemSpacing: CGFloat = 0.0
+    }
+    
 }

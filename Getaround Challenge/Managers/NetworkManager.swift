@@ -33,6 +33,10 @@ class NetworkManager: WebserviceProtocol {
     private let urlSession: URLSession
     private let parser: Parser
     
+    enum Constants {
+        static let imageBaseURL = "https://image.tmdb.org/t/p/w500"
+    }
+    
     init(urlSession: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
         self.urlSession = urlSession
         self.parser = Parser()
