@@ -36,7 +36,7 @@ class MoviesViewController: BaseViewController {
     }
     
     private func prepareUI() {
-        title = Constants.ScreenTitles.Movies
+        title = Constants.SceneTitles.Movies
         self.view.addSubview(collectionView)
         collectionView.fillSuperView()
         collectionView.reloadData()
@@ -84,7 +84,9 @@ extension MoviesViewController: UICollectionViewDelegateFlowLayout {
 
 extension MoviesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let selectedMovie = self.movies[indexPath.row]
+        let movieDetailsVC = MovieDetailsViewController(movie: selectedMovie)
+        self.navigationController?.pushViewController(movieDetailsVC, animated: true)
     }
 }
 

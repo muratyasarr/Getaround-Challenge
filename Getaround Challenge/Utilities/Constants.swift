@@ -10,8 +10,9 @@ import UIKit
 
 enum Constants {
     
-    enum ScreenTitles {
+    enum SceneTitles {
         static let Movies = "Movies"
+        static let MovieDetails = "Movie Details"
     }
     
     enum Colors {

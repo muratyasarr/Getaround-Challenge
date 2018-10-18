@@ -20,6 +20,7 @@
 		AC0FB6EB2178B5700048296C /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0FB6EA2178B5700048296C /* MovieCollectionViewCell.swift */; };
 		AC0FB6ED2178BB680048296C /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0FB6EC2178BB680048296C /* UIView+Extension.swift */; };
 		AC0FB6EF2178C7F50048296C /* TMDBResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0FB6EE2178C7F50048296C /* TMDBResultModel.swift */; };
+		AC0FB6F12178D9B20048296C /* MovieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0FB6F02178D9B20048296C /* MovieDetailsViewController.swift */; };
 		F75CC460EB09D474EE33AD23 /* Pods_Getaround_ChallengeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3AD648279EED18627938292 /* Pods_Getaround_ChallengeTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +54,7 @@
 		AC0FB6EA2178B5700048296C /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
 		AC0FB6EC2178BB680048296C /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		AC0FB6EE2178C7F50048296C /* TMDBResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBResultModel.swift; sourceTree = "<group>"; };
+		AC0FB6F02178D9B20048296C /* MovieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewController.swift; sourceTree = "<group>"; };
 		B161E3C6BCA0ACAA945B8019 /* Pods-Getaround ChallengeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Getaround ChallengeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Getaround ChallengeTests/Pods-Getaround ChallengeTests.release.xcconfig"; sourceTree = "<group>"; };
 		CA7934D974B8F76E9C515896 /* Pods-Getaround Challenge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Getaround Challenge.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Getaround Challenge/Pods-Getaround Challenge.debug.xcconfig"; sourceTree = "<group>"; };
 		FE7B885C4EF02C09231429BE /* Pods-Getaround Challenge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Getaround Challenge.release.xcconfig"; path = "Pods/Target Support Files/Pods-Getaround Challenge/Pods-Getaround Challenge.release.xcconfig"; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 				AC0FB6E52178B0EB0048296C /* BaseViewController.swift */,
 				AC0FB6E32178AF4D0048296C /* BaseSearchNavigationController.swift */,
 				AC0FB6DF2178A7550048296C /* MoviesViewController.swift */,
+				AC0FB6F02178D9B20048296C /* MovieDetailsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 				AC0FB6B4217747350048296C /* AppDelegate.swift in Sources */,
 				AC0FB6ED2178BB680048296C /* UIView+Extension.swift in Sources */,
 				AC0FB6E02178A7550048296C /* MoviesViewController.swift in Sources */,
+				AC0FB6F12178D9B20048296C /* MovieDetailsViewController.swift in Sources */,
 				AC0FB6EF2178C7F50048296C /* TMDBResultModel.swift in Sources */,
 				AC0FB6E42178AF4D0048296C /* BaseSearchNavigationController.swift in Sources */,
 				AC0FB6E22178ACB50048296C /* Constants.swift in Sources */,

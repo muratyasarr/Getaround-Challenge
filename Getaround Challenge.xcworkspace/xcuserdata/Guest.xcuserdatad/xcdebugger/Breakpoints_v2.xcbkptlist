@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Getaround Challenge/ViewControllers/MoviesViewController.swift"
-            timestampString = "561566943.538419"
+            timestampString = "561568582.633211"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
             landmarkName = "prepareData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Getaround Challenge/Managers/NetworkManager.swift"
-            timestampString = "561566943.539489"
+            timestampString = "561568582.633673"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "54"
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Getaround Challenge/ViewControllers/MoviesViewController.swift"
-            timestampString = "561566943.539765"
+            timestampString = "561568582.633942"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "prepareData()"
             landmarkType = "7">
          </BreakpointContent>
