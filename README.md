@@ -21,6 +21,5 @@ The coding challenge will be judged on:
 * Code readability
 * Knowledge of iOS core SDKs.
 
-## Screenshots
 ![First](Screenshots/2.jpg?raw=true)
 ![Second](Screenshots/3.jpg?raw=true)
