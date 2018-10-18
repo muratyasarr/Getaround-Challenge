@@ -14,7 +14,6 @@ class MovieCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.backgroundColor = .blue
         return imageView
     }()
     
@@ -30,5 +29,11 @@ class MovieCollectionViewCell: UICollectionViewCell {
     private func setupViews() {
         addSubview(coverImageView)
         coverImageView.fillSuperView()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        coverImageView.kf.cancelDownloadTask()
+        coverImageView.image = nil
     }
 }

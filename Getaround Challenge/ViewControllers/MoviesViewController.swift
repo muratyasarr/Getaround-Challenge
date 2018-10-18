@@ -11,7 +11,7 @@ import Kingfisher
 
 class MoviesViewController: BaseViewController {
     
-    var movies: [Movie] = [Movie(), Movie()] {
+    var movies: [Movie] = [] {
         didSet {
             collectionView.reloadData()
         }
@@ -53,6 +53,9 @@ class MoviesViewController: BaseViewController {
             }
         }
     }
+    
+    // TODO: Pagination might be implemented for infinite scrollling experience
+    
 }
 
 extension MoviesViewController: UICollectionViewDataSource {
@@ -73,8 +76,8 @@ extension MoviesViewController: UICollectionViewDataSource {
 
 extension MoviesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = self.view.frame.width/2.0
-        return CGSize(width: width, height: width*2.0)
+        let width = self.view.frame.width * 0.5
+        return CGSize(width: width, height: width * 1.5)
     }
 }
 
