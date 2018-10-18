@@ -10,23 +10,10 @@ import UIKit
 
 class MovieDetailsViewController: UIViewController {
     
-    let movie: Movie
-    
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.alwaysBounceVertical = true
-        scrollView.alwaysBounceHorizontal = false
-//        scrollView.addSubview(contentView)
         return scrollView
     }()
-    
-//    lazy var contentView: UIView = {
-//        let view = UIView()
-//        view.addSubview(backdropImageView)
-//        view.addSubview(movieTitleLabel)
-//        view.addSubview(movieOverviewLabel)
-//        return view
-//    }()
     
     lazy var backdropImageView: UIImageView = {
         let imageView = UIImageView()
@@ -37,9 +24,9 @@ class MovieDetailsViewController: UIViewController {
     
     lazy var movieTitleLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: Constants.FontSizes.contentTitle)
         label.textColor = .white
         label.numberOfLines = 0
-        label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         return label
     }()
     
@@ -47,9 +34,11 @@ class MovieDetailsViewController: UIViewController {
         let label = UILabel()
         label.textColor = .white
         label.numberOfLines = 0
-        label.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
+        label.textAlignment = .justified
         return label
     }()
+    
+    let movie: Movie
     
     init(movie: Movie) {
         self.movie = movie
@@ -78,11 +67,10 @@ class MovieDetailsViewController: UIViewController {
     
     private func setupConstraints() {
         scrollView.fillSuperView()
-//        contentView.fillSuperView()
-        backdropImageView.anchor(top: scrollView.topAnchor, leading: scrollView.leadingAnchor, trailing: scrollView.trailingAnchor)
-        backdropImageView.heightAnchor.constraint(equalToConstant: 300.0).isActive = true
-        movieTitleLabel.anchor(top: backdropImageView.bottomAnchor, leading: scrollView.leadingAnchor, trailing: scrollView.trailingAnchor, bottom: movieOverviewLabel.topAnchor, padding: .init(top: 16.0, left: 8.0, bottom: 16.0, right: 8.0))
-        movieOverviewLabel.anchor(leading: scrollView.leadingAnchor, trailing: scrollView.trailingAnchor, bottom: scrollView.bottomAnchor, padding: .init(top: 0.0, left: 8.0, bottom: 8.0, right: 8.0))
+        backdropImageView.anchor(top: scrollView.topAnchor, leading: view.safeAreaLayoutGuide.leadingAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor)
+        backdropImageView.heightAnchor.constraint(equalTo: backdropImageView.widthAnchor, multiplier: 0.7).isActive = true
+        movieTitleLabel.anchor(top: backdropImageView.bottomAnchor, leading: view.safeAreaLayoutGuide.leadingAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor, bottom: movieOverviewLabel.topAnchor, padding: .init(top: Constants.Metrics.movieDetailsTextVerticalMargin, left: Constants.Metrics.movieDetailsTextHorizontalMargin, bottom: Constants.Metrics.movieDetailsTextVerticalMargin, right: Constants.Metrics.movieDetailsTextHorizontalMargin))
+        movieOverviewLabel.anchor(leading: view.safeAreaLayoutGuide.leadingAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor, bottom: scrollView.bottomAnchor, padding: .init(top: 0.0, left: Constants.Metrics.movieDetailsTextHorizontalMargin, bottom: Constants.Metrics.movieDetailsTextVerticalMargin, right: Constants.Metrics.movieDetailsTextHorizontalMargin))
     }
     
     private func setupContent() {
@@ -92,5 +80,4 @@ class MovieDetailsViewController: UIViewController {
         movieTitleLabel.text = movie.title
         movieOverviewLabel.text = movie.overview
     }
-
 }

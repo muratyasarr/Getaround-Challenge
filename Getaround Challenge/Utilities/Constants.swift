@@ -27,6 +27,12 @@ enum Constants {
     enum Metrics {
         static let moviesCollectionViewLineSpacing: CGFloat = 0.0
         static let moviesCollectionViewInterItemSpacing: CGFloat = 0.0
+        static let movieDetailsTextHorizontalMargin: CGFloat = 12.0
+        static let movieDetailsTextVerticalMargin: CGFloat = 16.0
+    }
+    
+    enum FontSizes {
+        static let contentTitle: CGFloat = 22.0
     }
     
 }
