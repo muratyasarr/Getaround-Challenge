@@ -128,7 +128,7 @@ extension MoviesEndpoint: Endpoint {
         case .nowPlaying:
             return request(forPath: "/3/movie/now_playing")
         case .search:
-            return request(forPath: "/search/movie")
+            return request(forPath: "3/search/movie")
         }
     }
     

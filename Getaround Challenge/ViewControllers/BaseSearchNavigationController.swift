@@ -18,6 +18,8 @@ class BaseSearchNavigationController: UINavigationController {
     private func prepareUI() {
         navigationBar.prefersLargeTitles = true
         navigationBar.barTintColor = Constants.Colors.darkBackgroundColor
+        navigationBar.tintColor = .white
+        navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationBar.isTranslucent = false
         let search = UISearchController(searchResultsController: nil)

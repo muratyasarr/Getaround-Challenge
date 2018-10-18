@@ -13,6 +13,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         imageView.backgroundColor = .blue
         return imageView
     }()

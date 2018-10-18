@@ -11,11 +11,16 @@ import Kingfisher
 
 class MoviesViewController: BaseViewController {
     
-    var movies: [Movie] = [Movie(), Movie()]
+    var movies: [Movie] = [Movie(), Movie()] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumInteritemSpacing = 0
+        flowLayout.minimumLineSpacing = 0
         let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: flowLayout)
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -27,6 +32,7 @@ class MoviesViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareUI()
+        prepareData()
     }
     
     private func prepareUI() {
@@ -34,7 +40,18 @@ class MoviesViewController: BaseViewController {
         self.view.addSubview(collectionView)
         collectionView.fillSuperView()
         collectionView.reloadData()
-        
+    }
+    
+    private func prepareData() {
+        NetworkManager().request(MoviesEndpoint.nowPlaying) { (result: Result<TMDBResultModel<[Movie]>>) in
+            switch result {
+            case .success(let result):
+                guard let movies = result.results else { return }
+                self.movies = movies
+            case .error(let error):
+                print("error: \(error.localizedDescription)")
+            }
+        }
     }
 }
 
@@ -45,8 +62,11 @@ extension MoviesViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let movieCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: MovieCollectionViewCell.self), for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell() }
-        
-        movieCell.coverImageView.kf.setImage(with: <#T##Resource?#>)
+        let movie = movies[indexPath.row]
+        // TODO: fetch image base url from a network related layer.
+        if let posterImagePath = movie.posterImagePath, let posterImageURL = URL(string: "https://image.tmdb.org/t/p/w500" + posterImagePath) {
+            movieCell.coverImageView.kf.setImage(with: posterImageURL)
+        }
         return movieCell
     }
 }

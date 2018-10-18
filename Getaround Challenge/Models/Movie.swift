@@ -18,6 +18,6 @@ class Movie: Codable {
         case title
         case posterImagePath = "poster_path"
         case backdropImagePath = "backdrop_path"
-        case plotOverview
+        case overview
     }
 }
