@@ -67,7 +67,6 @@ extension MoviesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let movieCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: MovieCollectionViewCell.self), for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell() }
         let movie = movies[indexPath.row]
-        // TODO: get image url from a network layer method. Make it work correctly also for full url paths.
         if let posterImagePath = movie.posterImagePath, let posterImageURL = URL(string: NetworkManager.Constants.imageBaseURL + posterImagePath) {
             movieCell.coverImageView.kf.setImage(with: posterImageURL)
         }
