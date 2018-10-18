@@ -10,4 +10,14 @@ import Foundation
 
 class Movie: Codable {
     var title: String?
+    var posterImagePath: String?
+    var backdropImagePath: String?
+    var overview: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case title
+        case posterImagePath = "poster_path"
+        case backdropImagePath = "backdrop_path"
+        case plotOverview
+    }
 }

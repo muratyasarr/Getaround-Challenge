@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MoviesViewController: BaseViewController {
     
@@ -44,6 +45,8 @@ extension MoviesViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let movieCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: MovieCollectionViewCell.self), for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell() }
+        
+        movieCell.coverImageView.kf.setImage(with: <#T##Resource?#>)
         return movieCell
     }
 }
