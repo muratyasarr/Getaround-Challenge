@@ -8,15 +8,17 @@
 
 import UIKit
 
-class MovieCollectionViewCell: UICollectionViewCell {
+final class MovieCollectionViewCell: UICollectionViewCell {
     
-    lazy var coverImageView: UIImageView = {
+    // MARK:- View Declerations
+    let coverImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         return imageView
     }()
     
+    // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -26,14 +28,16 @@ class MovieCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupViews() {
-        addSubview(coverImageView)
-        coverImageView.fillSuperView()
-    }
-    
+    // MARK:- Lifecycle Methods
     override func prepareForReuse() {
         super.prepareForReuse()
         coverImageView.kf.cancelDownloadTask()
         coverImageView.image = nil
+    }
+    
+    // MARK:- Custom Methods
+    private func setupViews() {
+        addSubview(coverImageView)
+        coverImageView.fillSuperView()
     }
 }

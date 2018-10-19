@@ -28,7 +28,7 @@ protocol WebserviceProtocol {
     func request<T: Decodable>(_ endpoint: Endpoint, completion: @escaping ResultCallback<T>)
 }
 
-class NetworkManager: WebserviceProtocol {
+final class NetworkManager: WebserviceProtocol {
     
     private let urlSession: URLSession
     private let parser: Parser
@@ -71,8 +71,8 @@ struct Parser {
     let jsonDecoder = JSONDecoder()
     func json<T: Decodable>(data: Data, completion: @escaping ResultCallback<T>) {
         do {
-            let fiyuuResponseModel = try? jsonDecoder.decode(T.self, from: data)
-            OperationQueue.main.addOperation { completion(.success(fiyuuResponseModel!)) }
+            let responseModel = try? jsonDecoder.decode(T.self, from: data)
+            OperationQueue.main.addOperation { completion(.success(responseModel!)) }
         } catch let parseError {
             OperationQueue.main.addOperation { completion(.error(parseError)) }
         }
@@ -138,9 +138,7 @@ extension MoviesEndpoint: Endpoint {
     
     var httpMethod: String {
         switch self {
-        case .nowPlaying:
-            return "GET"
-        case .search:
+        case .nowPlaying, .search:
             return "GET"
         }
     }
@@ -159,18 +157,14 @@ extension MoviesEndpoint: Endpoint {
     var requestHeaders: [String: String]? {
         let defaultHeaders: [String: String] = [:]
         switch self {
-        case .nowPlaying:
-            return defaultHeaders
-        case .search:
+        case .nowPlaying, .search:
             return defaultHeaders
         }
     }
     
     var requestBody: Data? {
         switch self {
-        case .nowPlaying:
-            return nil
-        case .search:
+        case .nowPlaying, .search:
             return nil
         }
     }

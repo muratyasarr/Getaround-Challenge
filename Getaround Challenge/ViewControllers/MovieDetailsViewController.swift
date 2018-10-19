@@ -8,21 +8,22 @@
 
 import UIKit
 
-class MovieDetailsViewController: UIViewController {
+final class MovieDetailsViewController: BaseViewController {
     
-    lazy var scrollView: UIScrollView = {
+    // MARK:- View Declerations
+    private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         return scrollView
     }()
     
-    lazy var backdropImageView: UIImageView = {
+    private let backdropImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         return imageView
     }()
     
-    lazy var movieTitleLabel: UILabel = {
+    private let movieTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: Constants.FontSizes.contentTitle)
         label.textColor = .white
@@ -30,7 +31,7 @@ class MovieDetailsViewController: UIViewController {
         return label
     }()
     
-    lazy var movieOverviewLabel: UILabel = {
+    private let movieOverviewLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.numberOfLines = 0
@@ -38,8 +39,10 @@ class MovieDetailsViewController: UIViewController {
         return label
     }()
     
+    // MARK: - Properties
     let movie: Movie
     
+    // MARK: - Initialization
     init(movie: Movie) {
         self.movie = movie
         super.init(nibName: nil, bundle: nil)
@@ -49,11 +52,13 @@ class MovieDetailsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareUI()
     }
     
+    // MARK: - Custom Methods
     private func prepareUI() {
         title = Constants.SceneTitles.MovieDetails
         self.navigationItem.largeTitleDisplayMode = .never
@@ -66,11 +71,33 @@ class MovieDetailsViewController: UIViewController {
     }
     
     private func setupConstraints() {
-        scrollView.fillSuperView()
-        backdropImageView.anchor(top: scrollView.topAnchor, leading: view.safeAreaLayoutGuide.leadingAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor)
+        scrollView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                          leading: view.safeAreaLayoutGuide.leadingAnchor,
+                          trailing: view.safeAreaLayoutGuide.trailingAnchor,
+                          bottom: view.bottomAnchor)
+        
+        backdropImageView.anchor(top: scrollView.topAnchor,
+                                 leading: view.safeAreaLayoutGuide.leadingAnchor,
+                                 trailing: view.safeAreaLayoutGuide.trailingAnchor)
+        
         backdropImageView.heightAnchor.constraint(equalTo: backdropImageView.widthAnchor, multiplier: 0.7).isActive = true
-        movieTitleLabel.anchor(top: backdropImageView.bottomAnchor, leading: view.safeAreaLayoutGuide.leadingAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor, bottom: movieOverviewLabel.topAnchor, padding: .init(top: Constants.Metrics.movieDetailsTextVerticalMargin, left: Constants.Metrics.movieDetailsTextHorizontalMargin, bottom: Constants.Metrics.movieDetailsTextVerticalMargin, right: Constants.Metrics.movieDetailsTextHorizontalMargin))
-        movieOverviewLabel.anchor(leading: view.safeAreaLayoutGuide.leadingAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor, bottom: scrollView.bottomAnchor, padding: .init(top: 0.0, left: Constants.Metrics.movieDetailsTextHorizontalMargin, bottom: Constants.Metrics.movieDetailsTextVerticalMargin, right: Constants.Metrics.movieDetailsTextHorizontalMargin))
+        
+        movieTitleLabel.anchor(top: backdropImageView.bottomAnchor,
+                               leading: view.safeAreaLayoutGuide.leadingAnchor,
+                               trailing: view.safeAreaLayoutGuide.trailingAnchor,
+                               bottom: movieOverviewLabel.topAnchor,
+                               padding: .init(top: Constants.Metrics.movieDetailsTextVerticalMargin,
+                                              left: Constants.Metrics.movieDetailsTextHorizontalMargin,
+                                              bottom: Constants.Metrics.movieDetailsTextVerticalMargin,
+                                              right: Constants.Metrics.movieDetailsTextHorizontalMargin))
+        
+        movieOverviewLabel.anchor(leading: view.safeAreaLayoutGuide.leadingAnchor,
+                                  trailing: view.safeAreaLayoutGuide.trailingAnchor,
+                                  bottom: scrollView.bottomAnchor,
+                                  padding: .init(top: 0.0,
+                                                 left: Constants.Metrics.movieDetailsTextHorizontalMargin,
+                                                 bottom: Constants.Metrics.movieDetailsTextVerticalMargin,
+                                                 right: Constants.Metrics.movieDetailsTextHorizontalMargin))
     }
     
     private func setupContent() {

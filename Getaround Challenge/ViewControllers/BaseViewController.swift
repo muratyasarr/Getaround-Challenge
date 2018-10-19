@@ -10,6 +10,7 @@ import UIKit
 
 class BaseViewController: UIViewController {
 
+    // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Constants.Colors.darkBackgroundColor

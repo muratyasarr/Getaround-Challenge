@@ -9,12 +9,19 @@
 import UIKit
 
 class BaseSearchNavigationController: UINavigationController {
+    
+    // MARK: - Properties
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
+    // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareUI()
     }
 
+    // MARK: - Custom Methods
     private func prepareUI() {
         navigationBar.prefersLargeTitles = true
         navigationBar.barTintColor = Constants.Colors.darkBackgroundColor
@@ -25,8 +32,5 @@ class BaseSearchNavigationController: UINavigationController {
         let search = UISearchController(searchResultsController: nil)
         search.searchResultsUpdater = self.viewControllers.first as? UISearchResultsUpdating
         self.navigationItem.searchController = search
-    }
-    open override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 }

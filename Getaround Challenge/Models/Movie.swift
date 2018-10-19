@@ -9,10 +9,10 @@
 import Foundation
 
 class Movie: Codable {
-    var title: String?
-    var posterImagePath: String?
-    var backdropImagePath: String?
-    var overview: String?
+    let title: String?
+    let posterImagePath: String?
+    let backdropImagePath: String?
+    let overview: String?
     
     enum CodingKeys: String, CodingKey {
         case title

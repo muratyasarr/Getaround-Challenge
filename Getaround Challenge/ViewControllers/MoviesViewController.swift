@@ -9,19 +9,21 @@
 import UIKit
 import Kingfisher
 
-class MoviesViewController: BaseViewController {
+final class MoviesViewController: BaseViewController {
     
+    // MARK: - Properties
     var movies: [Movie] = [] {
         didSet {
             collectionView.reloadData()
         }
     }
     
+    // MARK:- View Declerations
     lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumInteritemSpacing = Constants.Metrics.moviesCollectionViewInterItemSpacing
         flowLayout.minimumLineSpacing = Constants.Metrics.moviesCollectionViewLineSpacing
-        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: flowLayout)
+        let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: flowLayout)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: MovieCollectionViewCell.self))
@@ -29,16 +31,21 @@ class MoviesViewController: BaseViewController {
        return collectionView
     }()
     
+    // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareUI()
         prepareData()
     }
     
+    // MARK: - Custom Methods
     private func prepareUI() {
         title = Constants.SceneTitles.Movies
         self.view.addSubview(collectionView)
-        collectionView.fillSuperView()
+        collectionView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                              leading: view.safeAreaLayoutGuide.leadingAnchor,
+                              trailing: view.safeAreaLayoutGuide.trailingAnchor,
+                              bottom: view.bottomAnchor)
         collectionView.reloadData()
     }
     
