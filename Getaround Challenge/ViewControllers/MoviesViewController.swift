@@ -34,8 +34,13 @@ final class MoviesViewController: BaseViewController {
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        prepareUI()
         prepareData()
+        prepareUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigationItem.hidesSearchBarWhenScrolling = true
     }
     
     // MARK: - Custom Methods
@@ -47,6 +52,23 @@ final class MoviesViewController: BaseViewController {
                               trailing: view.safeAreaLayoutGuide.trailingAnchor,
                               bottom: view.bottomAnchor)
         collectionView.reloadData()
+        
+        // Navigation Bar Customisation
+        navigationController?.navigationBar.barTintColor = Constants.Colors.darkBackgroundColor
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        
+        // Search Bar Customisation
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.tintColor = .white
+        searchController.searchBar.barStyle = .black
+        self.navigationItem.searchController = searchController
+        self.navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     private func prepareData() {
@@ -97,7 +119,8 @@ extension MoviesViewController: UICollectionViewDelegate {
 }
 
 extension MoviesViewController: UISearchResultsUpdating {
+    
     func updateSearchResults(for searchController: UISearchController) {
-        
+        print("...")
     }
 }
