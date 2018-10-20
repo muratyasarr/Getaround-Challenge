@@ -101,7 +101,7 @@ final class MovieDetailsViewController: BaseViewController {
     }
     
     private func setupContent() {
-        if let posterImagePath = movie.backdropImagePath, let posterImageURL = URL(string: NetworkManager.Constants.imageBaseURL + posterImagePath) {
+        if let posterImagePath = movie.backdropImagePath, let posterImageURL = URL(string: NetworkManager.Constants.TMDBConstants.imageBaseURL + posterImagePath) {
             backdropImageView.kf.setImage(with: posterImageURL)
         }
         movieTitleLabel.text = movie.title

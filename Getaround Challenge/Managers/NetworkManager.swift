@@ -34,7 +34,10 @@ final class NetworkManager: WebserviceProtocol {
     private let parser: Parser
     
     enum Constants {
-        static let imageBaseURL = "https://image.tmdb.org/t/p/w500"
+        enum TMDBConstants {
+            static let host = "api.themoviedb.org"
+            static let imageBaseURL = "https://image.tmdb.org/t/p/w500"
+        }
     }
     
     init(urlSession: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
@@ -123,7 +126,7 @@ extension MoviesEndpoint: Endpoint {
     }
     
     var host: String {
-        return "api.themoviedb.org"
+        return NetworkManager.Constants.TMDBConstants.host
     }
     
     var request: URLRequest? {

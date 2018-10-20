@@ -114,7 +114,7 @@ extension MoviesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let movieCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: MovieCollectionViewCell.self), for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell() }
         let movie = searchResults.isEmpty ? nowPlayingMovies[indexPath.row] : searchResults[indexPath.row]
-        if let posterImagePath = movie.posterImagePath, let posterImageURL = URL(string: NetworkManager.Constants.imageBaseURL + posterImagePath) {
+        if let posterImagePath = movie.posterImagePath, let posterImageURL = URL(string: NetworkManager.Constants.TMDBConstants.imageBaseURL + posterImagePath) {
             movieCell.coverImageView.kf.setImage(with: posterImageURL)
         }
         return movieCell
