@@ -12,11 +12,19 @@ import Kingfisher
 final class MoviesViewController: BaseViewController {
     
     // MARK: - Properties
-    var movies: [Movie] = [] {
+    var nowPlayingMovies: [Movie] = [] {
         didSet {
             collectionView.reloadData()
         }
     }
+    
+    var searchResults: [Movie] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
+    var networkManager: NetworkManager
     
     // MARK:- View Declerations
     lazy var collectionView: UICollectionView = {
@@ -31,6 +39,16 @@ final class MoviesViewController: BaseViewController {
        return collectionView
     }()
     
+    // MARK: - Initialization
+    init(networkManager: NetworkManager) {
+        self.networkManager = networkManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,13 +58,13 @@ final class MoviesViewController: BaseViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.navigationItem.hidesSearchBarWhenScrolling = true
+        navigationItem.hidesSearchBarWhenScrolling = true
     }
     
     // MARK: - Custom Methods
     private func prepareUI() {
         title = Constants.SceneTitles.Movies
-        self.view.addSubview(collectionView)
+        view.addSubview(collectionView)
         collectionView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                               leading: view.safeAreaLayoutGuide.leadingAnchor,
                               trailing: view.safeAreaLayoutGuide.trailingAnchor,
@@ -54,8 +72,7 @@ final class MoviesViewController: BaseViewController {
         collectionView.reloadData()
         
         // Navigation Bar Customisation
-        navigationController?.navigationBar.barTintColor = Constants.Colors.darkBackgroundColor
-        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -63,7 +80,9 @@ final class MoviesViewController: BaseViewController {
         
         // Search Bar Customisation
         let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        self.definesPresentationContext = true
+        searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.tintColor = .white
         searchController.searchBar.barStyle = .black
@@ -72,12 +91,11 @@ final class MoviesViewController: BaseViewController {
     }
     
     private func prepareData() {
-        // TODO: Could add a loading indicator.
-        NetworkManager().request(MoviesEndpoint.nowPlaying) { (result: Result<TMDBResultModel<[Movie]>>) in
+        networkManager.request(MoviesEndpoint.nowPlaying) { [weak self] (result: Result<TMDBResultModel<[Movie]>>) in
             switch result {
             case .success(let result):
                 guard let movies = result.results else { return }
-                self.movies = movies
+                self?.nowPlayingMovies = movies
             case .error(let error):
                 // TODO: Showing alert and informing users of the error should improve user experience.
                 print("error: \(error.localizedDescription)")
@@ -90,12 +108,12 @@ final class MoviesViewController: BaseViewController {
 
 extension MoviesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movies.count
+        return searchResults.isEmpty ? nowPlayingMovies.count : searchResults.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let movieCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: MovieCollectionViewCell.self), for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell() }
-        let movie = movies[indexPath.row]
+        let movie = searchResults.isEmpty ? nowPlayingMovies[indexPath.row] : searchResults[indexPath.row]
         if let posterImagePath = movie.posterImagePath, let posterImageURL = URL(string: NetworkManager.Constants.imageBaseURL + posterImagePath) {
             movieCell.coverImageView.kf.setImage(with: posterImageURL)
         }
@@ -105,22 +123,38 @@ extension MoviesViewController: UICollectionViewDataSource {
 
 extension MoviesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = self.view.frame.width * 0.5
+        let width = view.frame.width * 0.5
         return CGSize(width: width, height: width * 1.5)
     }
 }
 
 extension MoviesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedMovie = self.movies[indexPath.row]
+        let selectedMovie = searchResults.isEmpty ? nowPlayingMovies[indexPath.row] : searchResults[indexPath.row]
         let movieDetailsVC = MovieDetailsViewController(movie: selectedMovie)
-        self.navigationController?.pushViewController(movieDetailsVC, animated: true)
+        navigationController?.pushViewController(movieDetailsVC, animated: true)
     }
 }
 
-extension MoviesViewController: UISearchResultsUpdating {
+extension MoviesViewController: UISearchBarDelegate {
     
-    func updateSearchResults(for searchController: UISearchController) {
-        print("...")
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchResults = []
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        networkManager.request(MoviesEndpoint.search(queryText: searchText)) { [weak self] (result: Result<TMDBResultModel<[Movie]>>) in
+            switch result {
+            case .success(let result):
+                guard let movies = result.results else { return }
+                self?.searchResults = movies
+            case .error(let error):
+                print("error: \(error.localizedDescription)")
+            }
+        }
     }
 }

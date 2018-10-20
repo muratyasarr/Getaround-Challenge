@@ -49,7 +49,6 @@ final class NetworkManager: WebserviceProtocol {
             return
         }
         
-        
         let task = urlSession.dataTask(with: request) { (data, response, error) in
             if let error = error {
                 OperationQueue.main.addOperation({ completion(.error(error)) })
@@ -132,7 +131,7 @@ extension MoviesEndpoint: Endpoint {
         case .nowPlaying:
             return request(forPath: "/3/movie/now_playing")
         case .search:
-            return request(forPath: "3/search/movie")
+            return request(forPath: "/3/search/movie")
         }
     }
     
